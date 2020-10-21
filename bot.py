@@ -187,4 +187,4 @@ async def reset_cooldown(ctx):
 #     else:
 #         print('not connected')
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.zuQqEetGhKpom9NiwWbbMuA7UIM')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.PFDjSzYwLGYBirHM63K8Rd4Ir-c')
