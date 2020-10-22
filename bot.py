@@ -60,6 +60,7 @@ async def m(ctx,member:discord.Member):
 
     if ctx.author.voice==None:
         await ctx.send('Conecteza-te fiti-ar alifia de ras')
+        return
     else:
         pass
 
