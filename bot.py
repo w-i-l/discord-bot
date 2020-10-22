@@ -141,7 +141,7 @@ async def challange(ctx,member:discord.Member):
 
         await m(ctx,sclav)
 
-        await asyncio.sleep(5)
+        await asyncio.sleep(20)
 
 
 
