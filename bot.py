@@ -176,7 +176,7 @@ async def challange(ctx,member:discord.Member):
 async def reset_cooldown(ctx):
     if ctx.message.author.id==442038246726172683:
         m.reset_cooldown(ctx)
-# 
+#
 # @bot.command()
 # async def rol(ctx,member:discord.Member):
 #     await ctx.send(member.roles[-1].id)
@@ -187,4 +187,8 @@ async def reset_cooldown(ctx):
 #     else:
 #         print('not connected')
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.PFDjSzYwLGYBirHM63K8Rd4Ir-c')
+@bot.command()
+async def ping(ctx):
+    await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
+
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.zuQqEetGhKpom9NiwWbbMuA7UIM')
