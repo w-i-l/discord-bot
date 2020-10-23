@@ -192,4 +192,4 @@ async def reset_cooldown(ctx):
 async def ping(ctx):
     await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.EOW-t3W6KbFzsQYaEeQXW9zmk7M')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.jPkeDTbPbqSjH71rykiUCh2Ec7I')
