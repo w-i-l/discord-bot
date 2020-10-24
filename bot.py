@@ -3,6 +3,7 @@ from discord.ext import commands,tasks
 import random
 import asyncio
 
+
 bot=commands.Bot(command_prefix="<k ")
 
 @bot.event
@@ -39,49 +40,56 @@ async def hel(ctx):
     await ctx.send(embed=embed)
 
 
-@bot.event
-async def on_command_error(ctx,error):
-
-    if isinstance(error,commands.MissingRequiredArgument):
-        await ctx.send(ctx.message.author.mention+" trebuie un prost")
-    elif isinstance(error,commands.MemberNotFound):
-        await ctx.send("Da cu tag cumetre "+ctx.message.author.mention)
-    elif isinstance(error,commands.CommandNotFound):
-        await ctx.send("Nu pot asta, ce esti asa prost? "+ctx.message.author.mention)
-    elif isinstance(error,commands.CommandOnCooldown):
-        await ctx.send(ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s')
-    elif isinstance(error,asyncio.exceptions.TimeoutError):
-        await ctx.send('A expirat timpu cumetre')
+# @bot.event
+# async def on_command_error(ctx,error):
+#
+#     if isinstance(error,commands.MissingRequiredArgument):
+#         await ctx.send(ctx.message.author.mention+" trebuie un prost")
+#     elif isinstance(error,commands.MemberNotFound):
+#         await ctx.send("Da cu tag cumetre "+ctx.message.author.mention)
+#     elif isinstance(error,commands.CommandNotFound):
+#         await ctx.send("Nu pot asta, ce esti asa prost? "+ctx.message.author.mention)
+#     elif isinstance(error,commands.CommandOnCooldown):
+#         await ctx.send(ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s')
+#     elif isinstance(error,asyncio.exceptions.TimeoutError):
+#         await ctx.send('A expirat timpu cumetre')
 
 
 @bot.command()
 @commands.cooldown(1,300,commands.BucketType.user)
 async def m(ctx,member:discord.Member):
 
-    if ctx.author.voice==None:
-        await ctx.send('Conecteza-te fiti-ar alifia de ras')
-        return
-    else:
-        pass
+    message=ctx.message
 
     await s(ctx,ctx.message.author)
+
     channel=list(filter(lambda x: x.name=='sclav',ctx.guild.voice_channels))[0]
 
+    if ctx.author.voice==None:
 
-    if member.id == 442038246726172683:
+        embed=discord.Embed(description=message.author.mention+'Conecteza-te fiti-ar alifia de ras',color=discord.Colour.gold())
+        await ctx.send(embed=embed)
 
-        await ctx.send(ctx.message.author.mention+"  altadata, suge-o acum")
+    elif member.id == 442038246726172683:
+
+        embed=discord.Embed(description=message.author.mention+' altadata, suge-o acum',color=discord.Colour.gold())
+        await ctx.send(embed=embed)
+
 
     elif member.voice==None:
-        await ctx.send(member.mention+' nu poate fi babardit, incearca alt ratat')
+
+        embed=discord.Embed(description=message.author.mention+' nu poate fi babardit incearca alt fraier',color=discord.Colour.gold())
+        await ctx.send(embed=embed)
 
     elif member.voice.channel==channel:
-        await ctx.send(member.mention+' si-o ia in cur, schimba prostu')
 
+        embed=discord.Embed(description=message.author.mention+' si-o ia in cur schimba prostu',color=discord.Colour.gold())
+        await ctx.send(embed=embed)
     else:
 
         await member.move_to(channel)
-        await ctx.send(member.mention+' este abuzat!')
+        embed=discord.Embed(description=message.author.mention+' este abuzat',color=discord.Colour.gold())
+        await ctx.send(embed=embed)
 
 @bot.command()
 async def challange(ctx,member:discord.Member):
@@ -95,6 +103,8 @@ async def challange(ctx,member:discord.Member):
 
     if accept.content.lower() in ['nu','n']:
         return
+    elif accept==None:
+        await(ctx,member)
     else:
         pass
 
@@ -172,11 +182,34 @@ async def challange(ctx,member:discord.Member):
     await ctx.send(sclav.mention+' a fost maltrafoxat')
 
 
+# def checkTime():
+#     lista_membri=[297423886570487808,298486584028954625,500403270888456214,626838359096164394,504737061480431628,264469327300919304,268840845766164481,
+#             284426248841592833,297423029120794646,704253698183790672,264740601688227840,261058802516885504,465983314780749834,265841011777994754,
+#             595701164629295105]
+#     # This function runs periodically every 1 second
+#     threading.Timer(1, checkTime).start()
+#
+#     now = datetime.now()
+#
+#     current_time = now.strftime("%H:%M:%S")
+#
+#     if current_time[3:5] in [str(x) for x in range(61) ] and current_time[6:]=='00':
+#
+#         ales=random.choice(lista_membri)
+#
+# checkTime()
 
 @m.after_invoke
 async def reset_cooldown(ctx):
     if ctx.message.author.id==442038246726172683:
         m.reset_cooldown(ctx)
+
+@bot.command()
+async def id(ctx):
+    lista=[member.id for member in ctx.guild.members]
+    print(lista)
+
+
 #
 # @bot.command()
 # async def rol(ctx,member:discord.Member):
@@ -192,4 +225,4 @@ async def reset_cooldown(ctx):
 async def ping(ctx):
     await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.jPkeDTbPbqSjH71rykiUCh2Ec7I')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A._V81ovzijeV7fO66k3FLlQLJNyw')
