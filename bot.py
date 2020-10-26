@@ -167,17 +167,17 @@ async def challange(ctx,member:discord.Member):
 
         await m(ctx,sclav)
 
-        await asyncio.sleep(5)
+        await asyncio.sleep(20)
 
         await sclav.remove_roles(rol_sclav)
         await sclav.add_roles(honor)
-        
+
     else:
             await sclav.add_roles(rol_sclav)
 
             await m(ctx,sclav)
 
-            await asyncio.sleep(5)
+            await asyncio.sleep(20)
 
             await sclav.remove_roles(rol_sclav)
 
@@ -225,7 +225,7 @@ async def on_voice_state_update(member, before, after):
 
         if before.channel.name==after.channel.name:
 
-            variabila='deaf/mute'if member.voice.deaf==True or member.voice.mute==True else 'undeaf/unmute'
+            variabila='deaf/mute/stream'if member.voice.deaf==True or member.voice.mute==True else 'undeaf/unmute/unstream'
 
             embed=discord.Embed(description=member.mention+'si-a luat '+variabila+' pe '+before.channel.name+' la '+after.channel.name+' la ora '+current_time,color=discord.Colour.dark_blue())
         else:
@@ -255,4 +255,9 @@ async def on_voice_state_update(member, before, after):
 
 
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.7RXnr90E1xSe73Zk2HT5uVaBWiQ')
+
+
+
+
+
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.yoP4oZdsGP-smx2AqRWc7wPXIAk')
