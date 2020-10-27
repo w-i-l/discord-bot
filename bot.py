@@ -71,7 +71,7 @@ async def m(ctx,member:discord.Member):
         embed=discord.Embed(description=message.author.mention+'Conecteza-te fiti-ar alifia de ras',color=discord.Colour.gold())
         await ctx.send(embed=embed)
 
-    elif member.id == 442038246726172683:
+    elif member.id in[ 442038246726172683,284426248841592833]:
 
         embed=discord.Embed(description=message.author.mention+' altadata, suge-o acum',color=discord.Colour.gold())
         await ctx.send(embed=embed)
@@ -260,4 +260,4 @@ async def on_voice_state_update(member, before, after):
 
 
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.yoP4oZdsGP-smx2AqRWc7wPXIAk')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.mgnjPQOb-Ogyodt67woAzTGk2oE')
