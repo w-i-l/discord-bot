@@ -22,7 +22,21 @@ async def on_guild_remove(guild):
 
 @bot.command()
 async def sterge(ctx,numar=0):
-    await ctx.channel.purge(limit=numar)
+
+    s_m_k=list(filter(lambda x: x.id==769870819881910302,ctx.message.author.guild.channels))[0]
+    current_time = datetime.now().strftime("%H:%M:%S")
+
+    if ctx.channel.id==770567200360759317:
+
+        embed=discord.Embed(description=ctx.message.author.mention+' a incercat sa stearga '+str(numar)+' mesaje pe canalul '+ctx.message.channel.name+' la ora '+current_time,color=discord.Colour.red())
+        await s_m_k.send(embed=embed)
+        return
+
+    else:
+
+        await ctx.channel.purge(limit=numar)
+        embed=discord.Embed(description=ctx.message.author.mention+' a sters '+str(numar)+' mesaje pe canalul '+ctx.message.channel.name+' la ora '+current_time,color=discord.Colour.red())
+        await s_m_k.send(embed=embed)
 
 @bot.command()
 async def s(ctx,member:discord.Member):
@@ -71,7 +85,7 @@ async def m(ctx,member:discord.Member):
         embed=discord.Embed(description=message.author.mention+'Conecteza-te fiti-ar alifia de ras',color=discord.Colour.gold())
         await ctx.send(embed=embed)
 
-    elif member.id in[ 442038246726172683,284426248841592833]:
+    elif member.id == 442038246726172683:
 
         embed=discord.Embed(description=message.author.mention+' altadata, suge-o acum',color=discord.Colour.gold())
         await ctx.send(embed=embed)
@@ -90,7 +104,7 @@ async def m(ctx,member:discord.Member):
     else:
 
         await member.move_to(channel)
-        embed=discord.Embed(description=member+' este abuzat',color=discord.Colour.gold())
+        embed=discord.Embed(description=member.mention+' este abuzat',color=discord.Colour.gold())
         await ctx.send(embed=embed)
 
 @bot.command()
@@ -155,8 +169,6 @@ async def challange(ctx,member:discord.Member):
         await m(ctx,sclav)
 
         await asyncio.sleep(20)
-
-
 
         await sclav.remove_roles(rol_sclav)
         await sclav.add_roles(elita)
@@ -256,8 +268,4 @@ async def on_voice_state_update(member, before, after):
 
 
 
-
-
-
-
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.mgnjPQOb-Ogyodt67woAzTGk2oE')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.2_yIpcZTaVgt-2tQg_vk8k6Kk5Q')
