@@ -125,17 +125,24 @@ async def challange(ctx,member:discord.Member):
         pass
 
 
-    semne=['+','-']
-
-    numar_1=random.randint(0,101)
-    numar_2=random.randint(0,101)
+    semne=['+','-','*']
+    
+    numar_1=random.randint(0,1001)
+    numar_2=random.randint(0,1001)
     semn=random.choice(semne)
-
+    
     if semn=='+':
         rezultat=numar_1+numar_2
     elif semn=='-':
         rezultat=numar_1-numar_2
+    elif semn=='*':
+        numar_1=random.randint(0,31)
+        numar_2=random.randint(0,31)
+        rezultat=numar_1*numar_2
 
+    
+
+    
 
 
     embed=discord.Embed(title='Raspunde primul',description='Care este rezultatul?',color=discord.Colour.blue())
