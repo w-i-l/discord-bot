@@ -125,7 +125,7 @@ async def challange(ctx,member:discord.Member):
         pass
 
 
-    semne=['+','/','-','*']
+    semne=['+','-']
 
     numar_1=random.randint(0,101)
     numar_2=random.randint(0,101)
@@ -135,10 +135,6 @@ async def challange(ctx,member:discord.Member):
         rezultat=numar_1+numar_2
     elif semn=='-':
         rezultat=numar_1-numar_2
-    elif semn=='/':
-        rezultat=round(numar_1/numar_2,2)
-    elif semn=='*':
-        rezultat=numar_1*numar_2
 
 
 
