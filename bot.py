@@ -12,7 +12,6 @@ bot=commands.Bot(command_prefix="<k ")
 
 @bot.event
 async def on_ready():
-
     await bot.change_presence(status=discord.Status.idle,activity=discord.Game('Vezi medicamente pe <k h'))
 
 @bot.event
@@ -22,6 +21,25 @@ async def on_guild_join(guild):
 @bot.event
 async def on_guild_remove(guild):
     print('Bot removed from: '+guild.name)
+
+@bot.command()
+async def logout(ctx):
+    if ctx.message.author.id==442038246726172683:
+        await ctx.bot.logout()
+        reports=list(filter(lambda x: x.id==769870819881910302,member.guild.channels))[0]
+        current_time = datetime.now().strftime("%H:%M:%S")
+        embed=discord.Embed(description='Kayn s-a deconectat'+' la ora '+current_time,color=discord.Colour.dark_blue())
+        await reports.send(embed=embed)
+
+
+@bot.command()
+async def login(ctx):
+    if ctx.message.author.id==442038246726172683:
+        await ctx.bot.login()
+        reports=list(filter(lambda x: x.id==769870819881910302,member.guild.channels))[0]
+        current_time = datetime.now().strftime("%H:%M:%S")
+        embed=discord.Embed(description='Kayn s-a deconectat'+' la ora '+current_time,color=discord.Colour.dark_blue())
+        await reports.send(embed=embed)
 
 #######################################################################################################################################################
 
@@ -69,15 +87,19 @@ async def hel(ctx):
 async def on_command_error(ctx,error):
 
     if isinstance(error,commands.MissingRequiredArgument):
-        await ctx.send(ctx.message.author.mention+" trebuie un prost")
+        text=ctx.message.author.mention+" trebuie un prost"
     elif isinstance(error,commands.MemberNotFound):
-        await ctx.send("Da cu tag cumetre "+ctx.message.author.mention)
+        text="Da cu tag cumetre "+ctx.message.author.mention
     elif isinstance(error,commands.CommandNotFound):
-        await ctx.send("Nu pot asta, ce esti asa prost? "+ctx.message.author.mention)
+        text="Nu pot asta, ce esti asa prost? "+ctx.message.author.mention
     elif isinstance(error,commands.CommandOnCooldown):
-        await ctx.send(ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s')
-    elif isinstance(error,asyncio.TimeoutError):
-        await ctx.send('A expirat timpu cumetre')
+        text=ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s'
+    elif isinstance(error,commands.CommandInvokeError):
+        text='S-a dus mortulule, altadata!'
+        print(error)
+    embed=discord.Embed(description=text,color=discord.Colour.magenta())
+    await ctx.send(embed=embed)
+
 
 #######################################################################################################################################################
 
@@ -127,6 +149,7 @@ async def challange(ctx,member:discord.Member):
     embed1.add_field(name='Raspunde cu da/nu, y/n',value='daca nu esti pussy')
 
     await ctx.send(embed=embed1)
+
 
     accept= await bot.wait_for('message',check=lambda m:m.author==member and m.content.lower() in ['y','n','da','nu'],timeout=10.0)
 
@@ -193,7 +216,7 @@ async def challange(ctx,member:discord.Member):
         elita=ctx.guild.get_role(749571862735880202)
         honor=ctx.guild.get_role(757864291922739280)
 
-        if member.roles[-1].id==749571862735880202:
+        if sclav.roles[-1].id==749571862735880202:
             await sclav.remove_roles(elita)
             await sclav.add_roles(rol_sclav)
 
@@ -204,7 +227,7 @@ async def challange(ctx,member:discord.Member):
             await sclav.remove_roles(rol_sclav)
             await sclav.add_roles(elita)
 
-        elif member.roles[-1].id==757864291922739280:
+        elif sclav.roles[-1].id==757864291922739280:
             await sclav.remove_roles(honor)
             await sclav.add_roles(rol_sclav)
 
@@ -224,98 +247,14 @@ async def challange(ctx,member:discord.Member):
 
                 await sclav.remove_roles(rol_sclav)
 
+    await calcule()
 
-        embed=discord.Embed(description=sclav.mention+' a fost maltrafoxat',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
-
-    async def typing():
-
-        a=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-     '0','1','2','3','4','5','6','7','8','9']
+    embed=discord.Embed(description=sclav.mention+' a fost maltrafoxat',color=discord.Colour.gold())
+    await ctx.send(embed=embed)
 
 
 
-        cuvant=''
-        cuvant_bun=''
 
-        for x in range(20):
-            cuvant+=random.choice(a)
-
-        for x in cuvant:
-            cuvant_bun+=x+'///////'
-
-
-        embed=discord.Embed(title='Scrie primul textul',description='Ai grija sa scrii corect',color=discord.Colour.blue())
-        embed.add_field(name=cuvant_bun,value='-----------------------------')
-        await ctx.send(embed=embed)
-
-        print(cuvant)
-
-        msg=await bot.wait_for('message',check=lambda m:m.author.id in[ctx.message.author.id,member.id]and m.content==cuvant,timeout=30.0)
-
-        if msg==None:
-
-            await m(ctx, ctx.message.author)
-            await m(ctx,member)
-
-        elif msg.author==ctx.message.author:
-
-            sclav=member
-
-        else:
-            sclav=ctx.message.author
-
-
-        rol_sclav=ctx.guild.get_role(768533926602866709)
-        elita=ctx.guild.get_role(749571862735880202)
-        honor=ctx.guild.get_role(757864291922739280)
-
-        if member.roles[-1].id==749571862735880202:
-            await sclav.remove_roles(elita)
-            await sclav.add_roles(rol_sclav)
-
-            await m(ctx,sclav)
-
-            await asyncio.sleep(20)
-
-            await sclav.remove_roles(rol_sclav)
-            await sclav.add_roles(elita)
-
-        elif member.roles[-1].id==757864291922739280:
-            await sclav.remove_roles(honor)
-            await sclav.add_roles(rol_sclav)
-
-            await m(ctx,sclav)
-
-            await asyncio.sleep(20)
-
-            await sclav.remove_roles(rol_sclav)
-            await sclav.add_roles(honor)
-
-        else:
-                await sclav.add_roles(rol_sclav)
-
-                await m(ctx,sclav)
-
-                await asyncio.sleep(20)
-
-                await sclav.remove_roles(rol_sclav)
-
-
-        embed=discord.Embed(description=sclav.mention+' a fost maltrafoxat',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
-
-
-    functie=random.randint(1,2)
-    print(functie)
-    if functie==1:
-
-        await calcule()
-
-    else:
-
-        await typing()
 
 #######################################################################################################################################################
 
@@ -328,9 +267,8 @@ async def reset_cooldown(ctx):
 #######################################################################################################################################################
 
 # @bot.command()
-# async def id(ctx):
-#     lista=[member.id for member in ctx.guild.members]
-#     print(lista)
+# async def rol(ctx,member:discord.Member):
+#     print(member.roles)
 
 #######################################################################################################################################################
 
@@ -392,4 +330,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.mRfvKoJebxY1PhFOmDCjeylHycQ')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.5bSkJtklS76aLm_ER1H_VApb9j0')
