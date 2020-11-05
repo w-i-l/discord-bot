@@ -103,6 +103,9 @@ async def on_command_error(ctx,error):
 
 #######################################################################################################################################################
 
+ultimii=[]
+
+
 @bot.command()
 @commands.cooldown(1,300,commands.BucketType.user)
 async def m(ctx,member:discord.Member):
@@ -111,34 +114,85 @@ async def m(ctx,member:discord.Member):
 
     await s(ctx,ctx.message.author)
 
-    sclav=list(filter(lambda x: x.name=='sclav',ctx.guild.voice_channels))[0]
+    canal_sclav=list(filter(lambda x: x.name=='sclav',ctx.guild.voice_channels))[0]
 
-    if ctx.author.voice==None: ########################     daca autorul nu e conectat
+    global ultimii
 
-        embed=discord.Embed(description=message.author.mention+'Conecteza-te fiti-ar alifia de ras',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
+    if len(ultimii)==3 and ultimii[0][2]==ultimii[1][2]==ultimii[2][2] and (datetime.strptime(ultimii[2][1],"%H:%M:%S")-datetime.strptime(ultimii[2][1],"%H:%M:%S")).total_seconds()<=60:
 
-    elif member.id == 442038246726172683: ########################     daca ma beleste pe mine
+        sclav=ultimii[2][0]
 
-        embed=discord.Embed(description=message.author.mention+' altadata, suge-o acum',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
+        rol_sclav=ctx.guild.get_role(768533926602866709)
+        elita=ctx.guild.get_role(749571862735880202)###################rezolva daca nu e member
+        honor=ctx.guild.get_role(757864291922739280)
+
+        if sclav.roles[-1].id==749571862735880202:
+            await sclav.remove_roles(elita)
+            await sclav.add_roles(rol_sclav)
+
+            await asyncio.sleep(20)
+
+            await sclav.remove_roles(rol_sclav)
+            await sclav.add_roles(elita)
+
+        elif sclav.roles[-1].id==757864291922739280:
+            await sclav.remove_roles(honor)
+            await sclav.add_roles(rol_sclav)
+
+            await asyncio.sleep(20)
+
+            await sclav.remove_roles(rol_sclav)
+            await sclav.add_roles(honor)
+
+        else:
+                await sclav.add_roles(rol_sclav)
+
+                await asyncio.sleep(20)
+
+                await sclav.remove_roles(rol_sclav)
+
+        ultimii.pop(0)
+        ultimii.append([message.author,datetime.now().strftime("%H:%M:%S"),member])
+
+    else:
+
+        if len(ultimii)>=3 :
+
+            ultimii.pop(0)
+            ultimii.append([message.author,datetime.now().strftime("%H:%M:%S"),member])
+        else:
+            ultimii.append([message.author,datetime.now().strftime("%H:%M:%S"),member])
 
 
-    elif member.voice==None: ########################     daca membrul nu e conectat
+        if ctx.author.voice==None: ########################     daca autorul nu e conectat
 
-        embed=discord.Embed(description=message.author.mention+' nu poate fi babardit incearca alt fraier',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
+            embed=discord.Embed(description=message.author.mention+'Conecteza-te fiti-ar alifia de ras',color=discord.Colour.gold())
+            await ctx.send(embed=embed)
 
-    elif member.voice.channel==sclav: ########################     daca membrul e pe sclav
+        elif member.id == 442038246726172683: ########################     daca ma beleste pe mine
 
-        embed=discord.Embed(description=message.author.mention+' si-o ia in cur schimba prostu',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
+            embed=discord.Embed(description=message.author.mention+' altadata, suge-o acum',color=discord.Colour.gold())
+            await ctx.send(embed=embed)
 
-    else: ########################     daca e ok
 
-        await member.move_to(sclav)
-        embed=discord.Embed(description=member.mention+' este abuzat',color=discord.Colour.gold())
-        await ctx.send(embed=embed)
+        elif member.voice==None: ########################     daca membrul nu e conectat
+
+            embed=discord.Embed(description=message.author.mention+' nu poate fi babardit incearca alt fraier',color=discord.Colour.gold())
+            await ctx.send(embed=embed)
+
+        elif member.voice.channel==canal_sclav: ########################     daca membrul e pe sclav
+
+            embed=discord.Embed(description=message.author.mention+' si-o ia in cur schimba prostu',color=discord.Colour.gold())
+            await ctx.send(embed=embed)
+
+        else: ########################     daca e ok
+
+            await member.move_to(canal_sclav)
+            embed=discord.Embed(description=member.mention+' este abuzat',color=discord.Colour.gold())
+            await ctx.send(embed=embed)
+
+
+
 
 #######################################################################################################################################################
 
@@ -330,4 +384,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.5bSkJtklS76aLm_ER1H_VApb9j0')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.wCR2q9aumKGsYsX00V0JlUZdof8')
