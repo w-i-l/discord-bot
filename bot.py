@@ -24,15 +24,15 @@ async def on_guild_remove(guild):
     print('Bot removed from: '+guild.name)
 
 @bot.command()
-async def logout(ctx,duration:int):
+async def logout(ctx):
     if ctx.message.author.id==442038246726172683:
 
-        embed=discord.Embed(description='Kayn va fi deconectat pentru '+str(duration)+'s',color=discord.Colour.dark_blue())
+        embed=discord.Embed(description='Kayn va fi deconectat',color=discord.Colour.dark_blue())
         await ctx.send(embed=embed)
         reports=list(filter(lambda x: x.id==769870819881910302,ctx.guild.channels))[0]
-        embed=discord.Embed(description='Kayn s-a deconectat pentru '+str(duration)+'s'+' la ora '+ datetime.now().strftime("%H:%M:%S"),color=discord.Colour.dark_blue())
+        embed=discord.Embed(description='Kayn s-a deconectat '+' la ora '+ datetime.now().strftime("%H:%M:%S"),color=discord.Colour.dark_blue())
         await reports.send(embed=embed)
-        time.sleep(duration)
+        await   bot.close()
 
 
 
@@ -389,4 +389,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.AbKF4wbxg-tmUzcp10sVgcGOw8Q')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.NcEGoS536RBnoigZiqOUHa78llA')
