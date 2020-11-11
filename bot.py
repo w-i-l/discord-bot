@@ -32,7 +32,7 @@ async def logout(ctx):
         reports=list(filter(lambda x: x.id==769870819881910302,ctx.guild.channels))[0]
         embed=discord.Embed(description='Kayn s-a deconectat '+' la ora '+ datetime.now().strftime("%H:%M:%S"),color=discord.Colour.dark_blue())
         await reports.send(embed=embed)
-        await   bot.close()
+        await  bot.close()
 
 
 
@@ -389,4 +389,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.9vAbPw1ByMFwom_5tMe7FfeiqRo')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.E1ADacsFMZ-q8JMZPDHg3541rT4')
