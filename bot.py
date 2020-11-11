@@ -25,28 +25,22 @@ async def on_guild_remove(guild):
 
 @bot.command()
 async def logout(ctx,duration:int):
-    if ctx.message.author.id==442038246726172683:
+    commands=['m','challange','s','sterge','hel','ping','logout']
+    for x in commands:
+        command = bot.get_command(x)
+        command.update(enabled=False)
 
-        embed=discord.Embed(description='Kayn va fi deconectat',color=discord.Colour.dark_blue())
-        await ctx.send(embed=embed)
-        reports=list(filter(lambda x: x.id==769870819881910302,ctx.guild.channels))[0]
-        embed=discord.Embed(description='Kayn s-a deconectat '+' la ora '+ datetime.now().strftime("%H:%M:%S"),color=discord.Colour.dark_blue())
-        await reports.send(embed=embed)
-        time.sleep(duration)
-        await  bot.close()
-        
+    embed=discord.Embed(description='Kayn se va deconecta pentru '+str(duration)+'s',color=discord.Colour.dark_blue())
+    await ctx.send(embed=embed)
 
+    await asyncio.sleep(duration)
 
+    for x in commands:
+        command = bot.get_command(x)
+        command.update(enabled=True)
 
-
-@bot.command()
-async def login(ctx):
-    if ctx.message.author.id==442038246726172683:
-        await ctx.bot.login()
-        reports=list(filter(lambda x: x.id==769870819881910302,member.guild.channels))[0]
-        current_time = datetime.now().strftime("%H:%M:%S")
-        embed=discord.Embed(description='Kayn s-a deconectat'+' la ora '+current_time,color=discord.Colour.dark_blue())
-        await reports.send(embed=embed)
+    embed=discord.Embed(description='Kayn este gata de babardit',color=discord.Colour.dark_blue())
+    await ctx.send(embed=embed)
 
 #######################################################################################################################################################
 
@@ -90,22 +84,22 @@ async def hel(ctx):
 
 #######################################################################################################################################################
 
-# @bot.event
-# async def on_command_error(ctx,error):
-#
-#     if isinstance(error,commands.MissingRequiredArgument):
-#         text=ctx.message.author.mention+" trebuie un prost"
-#     elif isinstance(error,commands.MemberNotFound):
-#         text="Da cu tag cumetre "+ctx.message.author.mention
-#     elif isinstance(error,commands.CommandNotFound):
-#         text="Nu pot asta, ce esti asa prost? "+ctx.message.author.mention
-#     elif isinstance(error,commands.CommandOnCooldown):
-#         text=ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s'
-#     elif isinstance(error,commands.CommandInvokeError):
-#         text='S-a dus mortulule, altadata!'
-#         print(error)
-#     embed=discord.Embed(description=text,color=discord.Colour.magenta())
-#     await ctx.send(embed=embed)
+@bot.event
+async def on_command_error(ctx,error):
+
+    if isinstance(error,commands.MissingRequiredArgument):
+        text=ctx.message.author.mention+" baga si argumentu"
+    elif isinstance(error,commands.MemberNotFound):
+        text="Da cu tag cumetre "+ctx.message.author.mention
+    elif isinstance(error,commands.CommandNotFound):
+        text="Nu pot asta, ce esti asa prost? "+ctx.message.author.mention
+    elif isinstance(error,commands.CommandOnCooldown):
+        text=ctx.message.author.mention+' suge-o din nou in: '+str(round(error.retry_after,2))+'s'
+    elif isinstance(error,commands.CommandInvokeError):
+        text='S-a dus mortulule, altadata!'
+        print(error)
+    embed=discord.Embed(description=text,color=discord.Colour.magenta())
+    await ctx.send(embed=embed)
 
 
 #######################################################################################################################################################
@@ -117,11 +111,17 @@ ultimii=[]
 @commands.cooldown(1,300,commands.BucketType.user)
 async def m(ctx,member:discord.Member):
 
+
     message=ctx.message
 
     await s(ctx,ctx.message.author)
 
     canal_sclav=list(filter(lambda x: x.name=='sclav',ctx.guild.voice_channels))[0]
+
+    reports=list(filter(lambda x: x.id==769870819881910302,member.guild.channels))[0]
+    current_time = datetime.now().strftime("%H:%M:%S")
+    embed=discord.Embed(description=message.author.mention+'l-a maltrafoxat pe '+member.mention+ ' la ora '+current_time,color=discord.Colour.red())
+
 
     global ultimii
 
@@ -193,13 +193,10 @@ async def m(ctx,member:discord.Member):
             await ctx.send(embed=embed)
 
         else: ########################     daca e ok
-
+            await reports.send(embed=embed)
             await member.move_to(canal_sclav)
             embed=discord.Embed(description=member.mention+' este abuzat',color=discord.Colour.gold())
             await ctx.send(embed=embed)
-
-
-
 
 #######################################################################################################################################################
 
@@ -313,12 +310,7 @@ async def challange(ctx,member:discord.Member):
     embed=discord.Embed(description=sclav.mention+' a fost maltrafoxat',color=discord.Colour.gold())
     await ctx.send(embed=embed)
 
-
-
-
-
 #######################################################################################################################################################
-
 
 @m.after_invoke
 async def reset_cooldown(ctx):
@@ -346,12 +338,12 @@ async def on_voice_state_update(member, before, after):
 
     current_time = datetime.now().strftime("%H:%M:%S")
 
-    if before.channel is None and after.channel is not None and before.self_mute!=True and after.self_mute!=True :
+    if before.channel is None and after.channel is not None:
 
         embed=discord.Embed(description=member.mention+'s-a conectat la '+after.channel.name+' la ora '+current_time,color=discord.Colour.dark_blue())
         await reports.send(embed=embed)
 
-    elif before.channel is not None and after.channel is  None and before.self_mute!=True and after.self_mute!=True:
+    elif before.channel is not None and after.channel is  None:
 
         embed=discord.Embed(description=member.mention+'s-a deconectat de la '+before.channel.name+' la ora '+current_time,color=discord.Colour.dark_blue())
         await reports.send(embed=embed)
@@ -360,7 +352,7 @@ async def on_voice_state_update(member, before, after):
 
         if before.channel.name==after.channel.name:
 
-            variabila='deaf/mute/stream'if member.voice.deaf==True or member.voice.mute==True else 'undeaf/unmute/unstream'
+            variabila='deaf/mute/stream'if member.voice.deaf==True or member.voice.mute==True or (before.self_stream==False and after.self_stream==True) else 'undeaf/unmute/unstream'
 
             embed=discord.Embed(description=member.mention+'si-a luat '+variabila+' pe '+before.channel.name+' la '+after.channel.name+' la ora '+current_time,color=discord.Colour.dark_blue())
         else:
@@ -391,4 +383,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.E1ADacsFMZ-q8JMZPDHg3541rT4')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.OHClPHk_rhRVguQB8GLF3WI_JFg')
