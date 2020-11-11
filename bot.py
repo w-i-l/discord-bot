@@ -24,7 +24,7 @@ async def on_guild_remove(guild):
     print('Bot removed from: '+guild.name)
 
 @bot.command()
-async def logout(ctx):
+async def logout(ctx,duration:int):
     if ctx.message.author.id==442038246726172683:
 
         embed=discord.Embed(description='Kayn va fi deconectat',color=discord.Colour.dark_blue())
@@ -32,7 +32,9 @@ async def logout(ctx):
         reports=list(filter(lambda x: x.id==769870819881910302,ctx.guild.channels))[0]
         embed=discord.Embed(description='Kayn s-a deconectat '+' la ora '+ datetime.now().strftime("%H:%M:%S"),color=discord.Colour.dark_blue())
         await reports.send(embed=embed)
+        time.sleep(duration)
         await  bot.close()
+        
 
 
 
