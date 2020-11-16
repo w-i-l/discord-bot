@@ -15,32 +15,74 @@ bot=commands.Bot(command_prefix="<k ")
 async def on_ready():
     await bot.change_presence(status=discord.Status.idle,activity=discord.Game('Vezi medicamente pe <k h'))
 
-@bot.event
-async def on_guild_join(guild):
-    print('Bot has joined server: '+guild.name)
+@bot.command()
+async def logout(ctx,duration:int=None):
 
-@bot.event
-async def on_guild_remove(guild):
-    print('Bot removed from: '+guild.name)
+    commands=['m','challange','s','sterge','hel','ping','logout']
+
+    if ctx.message.author.id==442038246726172683:
+
+        if duration:
+
+            for x in commands:
+                command = bot.get_command(x)
+                command.update(enabled=False)
+
+            embed=discord.Embed(description='Kayn se va deconecta pentru '+str(duration)+'s',color=discord.Colour.dark_blue())
+            await ctx.send(embed=embed)
+
+            await bot.change_presence(status=discord.Status.dnd)
+
+            await asyncio.sleep(duration)
+
+            for x in commands:
+                command = bot.get_command(x)
+                command.update(enabled=True)
+
+            await bot.change_presence(status=discord.Status.idle,activity=discord.Game('Vezi medicamente pe <k h'))
+
+
+            embed=discord.Embed(description='Kayn este gata de babardit',color=discord.Colour.dark_blue())
+            await ctx.send(embed=embed)
+
+        else:
+
+            for x in commands:
+                command = bot.get_command(x)
+                command.update(enabled=False)
+
+            embed=discord.Embed(description='Kayn se va deconecta',color=discord.Colour.dark_blue())
+            await ctx.send(embed=embed)
+
+            await bot.change_presence(status=discord.Status.dnd)
+
+
+    else:
+
+        embed=discord.Embed(description='Contacteaza bossu pentru asta',color=discord.Colour.dark_blue())
+        await ctx.send(embed=embed)
 
 @bot.command()
-async def logout(ctx,duration:int):
-    commands=['m','challange','s','sterge','hel','ping','logout']
-    for x in commands:
-        command = bot.get_command(x)
-        command.update(enabled=False)
+async def login(ctx):
+    if ctx.message.author.id==442038246726172683:
 
-    embed=discord.Embed(description='Kayn se va deconecta pentru '+str(duration)+'s',color=discord.Colour.dark_blue())
-    await ctx.send(embed=embed)
+        commands=['m','challange','s','sterge','hel','ping','logout']
 
-    await asyncio.sleep(duration)
+        for x in commands:
+            command = bot.get_command(x)
+            command.update(enabled=True)
 
-    for x in commands:
-        command = bot.get_command(x)
-        command.update(enabled=True)
+        await bot.change_presence(status=discord.Status.idle,activity=discord.Game('Vezi medicamente pe <k h'))
 
-    embed=discord.Embed(description='Kayn este gata de babardit',color=discord.Colour.dark_blue())
-    await ctx.send(embed=embed)
+
+        embed=discord.Embed(description='Kayn este gata de babardit',color=discord.Colour.dark_blue())
+        await ctx.send(embed=embed)
+
+    else:
+
+        embed=discord.Embed(description='Contacteaza bossu pentru asta',color=discord.Colour.dark_blue())
+        await ctx.send(embed=embed)
+
 
 #######################################################################################################################################################
 
@@ -98,6 +140,8 @@ async def on_command_error(ctx,error):
     elif isinstance(error,commands.CommandInvokeError):
         text='S-a dus mortulule, altadata!'
         print(error)
+    elif isinstance(error,commands.DisabledCommand):
+        text="Sunt mort vorbeste cu sefu'"
     embed=discord.Embed(description=text,color=discord.Colour.magenta())
     await ctx.send(embed=embed)
 
@@ -383,4 +427,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.dqmTyaSlm52olwT14huWYSRu8kQ')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.EgsqqSXbxIqvtnX9GaxUxzav9L4')
