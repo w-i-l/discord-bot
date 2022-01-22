@@ -427,4 +427,4 @@ async def on_voice_state_update(member, before, after):
 
 #######################################################################################################################################################
 
-bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.bxOsXCbxv6WsLegY-AB8MvLGf6A')
+bot.run('NzY0ODIwNzk4OTg3ODI5MjQ4.X4L04A.D3_6s53IOmRVVG6EH77zSY6-200')
